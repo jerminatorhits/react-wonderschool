@@ -27,7 +27,7 @@ const ListItem = ({ id, group, status, task, onItemClick }: ListItemProps) => {
       <div style={{ height: '24px', width: '24px' }} className="mr-5 d-flex justify-center align-center">
         <img src={statusToSVG[status]} className="h-100 w-100" />
       </div>
-      <h6 className={`font-weight-bold mb-0${status === ITEM_STATUS.LOCKED ? ' text-muted' : ''}`}>{task}</h6>
+      <h6 className={`font-weight-bold mb-0${status === ITEM_STATUS.LOCKED ? ' text-muted' : ''}${status === ITEM_STATUS.COMPLETED ? ' strike-through' : ''}`}>{task}</h6>
     </li>
   );
 };
