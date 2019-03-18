@@ -1,21 +1,25 @@
 import * as React from 'react';
 import ListItem from '../ListItem';
-import { ListItemProps } from '../ListItem/ListItem';
+import { ListItemObject, ITEM_STATUS } from '../TaskGroups/TaskGroups';
 
 interface Props {
-  items: ListItemProps[];
+  items: ListItemObject[];
+  lockedSet: Set<number>;
+  onItemClick: (id: number, group: string) => void;
 }
+
 class TaskList extends React.Component<Props, {}> {
-  readonly state = {
-    
-  }
-  
   render() {
+    const { items, lockedSet, onItemClick } = this.props;
     return (
       <div>
-        {this.props.items.map((item: ListItemProps, index: number) => 
-          <ListItem key={index} {...item}/>
-        )}
+        {items.map((item: ListItemObject, index: number) => {
+          const status =
+            item.completedAt ? ITEM_STATUS.COMPLETED :
+            lockedSet.has(item.id) ? ITEM_STATUS.LOCKED :
+            ITEM_STATUS.INCOMPLETE;
+          return <ListItem key={index} onItemClick={onItemClick} status={status} {...item} />
+         })}
       </div>
     )
   }
